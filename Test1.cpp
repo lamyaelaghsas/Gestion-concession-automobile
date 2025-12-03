@@ -1,6 +1,6 @@
 #include <iostream>
 using namespace std;
-// #include "Model.h"
+#include "Model.h"
 
 // Quelques conseils avant de commencer...
 // * N'oubliez pas de tracer (cout << ...) tous les constructeurs et le destructeur !!! Ca, c'est pas un conseil,

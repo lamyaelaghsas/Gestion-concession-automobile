@@ -5,6 +5,9 @@ enum Engine { Petrol, Diesel, Electric, Hybrid };
 
 class Model
 {
+
+  friend ostream& operator<<(ostream& s, const Model& m);
+  
 private:
   char* name;
   int power;
@@ -31,6 +34,8 @@ public:
   float getBasePrice() const;
 
   void display() const;
+
+
 };
 
 #endif

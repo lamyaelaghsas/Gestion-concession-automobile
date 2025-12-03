@@ -1,83 +1,119 @@
 #include "Model.h"
+#include <iostream>
+#include <cstring>
 
-	Model::Model() // constructeur par défaut
-	{
-		name = nullptr;
-		setName("default")
-		setPower(80);
-		setEngine(Engine::Petrol);
-		setBasePrice(15000);
-	}
+using namespace std;
 
-	Model::Model(const char* n, int p, Engine e, float bp) // constructeur d'initialisation
-	{
-		name = nullptr;
-		setName(n);
-		setPower(p);
-		setEngine(e);
-		setBasePrice(bp);
-	}
+namespace carconfig { 
 
-	Model::Model(const Model& mod) // constructeur de copie
-	{
-		name = nullptr;
-		setName(mod.getName());
-		setPower(mod.getPower());
-		setEngine(mod.getEngine());
-		setBasePrice(mod.getBasePrice());
-	}
+Model::Model() // constructeur par défaut
+{
+    cout << "Constructeur par defaut" << endl;
+    name = nullptr;
+    setName("default");  
+    setPower(80);
+    setEngine(Engine::Petrol);
+    setBasePrice(15000);
+}
 
-	Model::~Model()
-	{
-		if (name != nullptr) delete name;
-	}
+Model::Model(const char* n, int p, Engine e, float bp) // constructeur d'initialisation
+{
+    cout << "Constructeur d'initialisation" << endl;
+    name = nullptr;
+    setName(n);
+    setPower(p);
+    setEngine(e);
+    setBasePrice(bp);
+}
 
-	void Model::setPower(int p)
-	{
-		if(p >= 0) power = p;
-	}
+Model::Model(const Model& mod) // constructeur de copie
+{
+    cout << "Constructeur de copie" << endl;
+    name = nullptr;
+    setName(mod.getName());
+    setPower(mod.getPower());
+    setEngine(mod.getEngine());
+    setBasePrice(mod.getBasePrice());
+}
 
-	int Model::getPower() const
-	{
-		return power;
-	}
+Model::~Model()
+{
+    cout << "Destructeur" << endl;
+    if (name != nullptr) delete[] name;  // delete[] pour un tableau
+}
 
-	void Model::setName(const char* n)
-	{
-		if (name != nullptr) delete name;
-		name = new char[strlen(n)+1];
-		strcpy(name,n);
-	}
+void Model::setPower(int p)
+{
+    if(p >= 0) power = p;
+}
 
-	const char* Model::getName() const
-	{
-		return name;
-	}
+int Model::getPower() const
+{
+    return power;
+}
 
-	void Model::setEngine(Engine e)
-	{
-		engine = e;
-	}
+void Model::setName(const char* n)
+{
+    if (name != nullptr) delete[] name; // ← Libère "default" de la mémoire
+    name = new char[strlen(n)+1];
+    strcpy(name,n);
+}
 
-	Engine Model::getEngine() const
-	{
-		return engine;
-	}
+const char* Model::getName() const
+{
+    return name;
+}
 
-	void Model::setBasePrice(float bp)
-	{
-		basePrice = bp;
-	}
+void Model::setEngine(Engine e)
+{
+    engine = e;
+}
 
-	float Model::getBasePrice() const
-	{
-		return basePrice;
-	}
+Engine Model::getEngine() const
+{
+    return engine;
+}
 
-	void Model::display() const
-	{
-		cout << "Nom : " << name << endl;
-		cout << "Puissace : " << power << endl;
-		cout << "Moteur : " << engine << endl; // !!!
-		cout << "Prix de base : " << basePrice << endl;
-	}
+void Model::setBasePrice(float bp)
+{
+    basePrice = bp;
+}
+
+float Model::getBasePrice() const
+{
+    return basePrice;
+}
+
+void Model::display() const
+{
+    cout << "Nom : " << name << endl;
+    cout << "Puissance : " << power << endl;
+    cout << "Moteur : ";
+    switch(engine) {
+        case Engine::Petrol: cout << "Essence"; break;
+        case Engine::Diesel: cout << "Diesel"; break;
+        case Engine::Electric: cout << "Electrique"; break;
+        case Engine::Hybrid: cout << "Hybride"; break;
+    }
+    cout << endl;
+    cout << "Prix de base : " << basePrice << endl;
+}
+
+ostream& operator<<(ostream& s, const Model& m)
+{
+    s << "Nom : " << m.name << endl;
+    s << "Puissance : " << m.power << endl;
+    s << "Moteur : ";
+    switch(m.engine) {
+        case Engine::Petrol: s << "Essence"; break;
+        case Engine::Diesel: s << "Diesel"; break;
+        case Engine::Electric: s << "Electrique"; break;
+        case Engine::Hybrid: s << "Hybride"; break;
+    }
+    s << endl;
+    s << fixed << setprecision(2);
+    s << "Prix de base : " << m.basePrice << endl;
+    return s;
+}
+
+} 
