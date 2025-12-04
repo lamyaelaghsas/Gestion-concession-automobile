@@ -9,9 +9,13 @@ CLASSDIR = class
 MODEL_SRC = $(CLASSDIR)/Model.cpp
 OPTION_SRC = $(CLASSDIR)/Option.cpp
 CAR_SRC = $(CLASSDIR)/Car.cpp
+PERSON_SRC = $(CLASSDIR)/Person.cpp
+ACTOR_SRC = $(CLASSDIR)/Actor.cpp
+EMPLOYEE_SRC = $(CLASSDIR)/Employee.cpp
+CLIENT_SRC = $(CLASSDIR)/Client.cpp
 
 # Règle par défaut
-all: test1 test2a test2b test2c test3
+all: test1 test2a test2b test2c test3 test4
 
 # Test 1 - Classe Model
 test1: Test1.cpp $(MODEL_SRC) $(CLASSDIR)/Model.h
@@ -33,9 +37,13 @@ test2c: Test2c.cpp $(MODEL_SRC) $(CAR_SRC) $(OPTION_SRC) $(CLASSDIR)/Model.h $(C
 test3: Test3.cpp $(MODEL_SRC) $(CAR_SRC) $(OPTION_SRC) $(CLASSDIR)/Model.h $(CLASSDIR)/Car.h $(CLASSDIR)/Option.h
 	$(CXX) $(CXXFLAGS) -o test3 Test3.cpp $(MODEL_SRC) $(CAR_SRC) $(OPTION_SRC)
 
+# Test 4 - Héritage et classes abstraites
+test4: Test4.cpp $(PERSON_SRC) $(ACTOR_SRC) $(EMPLOYEE_SRC) $(CLIENT_SRC) $(CLASSDIR)/Person.h $(CLASSDIR)/Actor.h $(CLASSDIR)/Employee.h $(CLASSDIR)/Client.h
+	$(CXX) $(CXXFLAGS) -o test4 Test4.cpp $(PERSON_SRC) $(ACTOR_SRC) $(EMPLOYEE_SRC) $(CLIENT_SRC)
+
 # Nettoyage
 clean:
-	rm -f test1 test2a test2b test2c test3
+	rm -f test1 test2a test2b test2c test3 test4
 
 # Règles pour compiler individuellement
 .PHONY: all clean

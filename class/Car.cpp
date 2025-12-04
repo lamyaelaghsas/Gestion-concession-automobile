@@ -143,13 +143,14 @@ void Car::addOption(const Option& option)
         i++;
     }
     
-    // Trouver une place libre
+    // Trouver la première place libre
     i = 0;
     while (i < 5 && options[i] != nullptr)
     {
         i++;
     }
     
+    // Vérifier s'il reste de la place
     if (i == 5)
     {
         cout << "Erreur: La limite d'options a ete atteinte" << endl;
@@ -166,7 +167,7 @@ void Car::addOption(const Option& option)
 void Car::removeOption(string code)
 {
     int i = 0;
-    int trouve = 0;
+    int found = 0;
     
     while (i < 5)
     {
@@ -176,14 +177,14 @@ void Car::removeOption(string code)
             {
                 delete options[i];
                 options[i] = nullptr;
-                i = 5;  // Sortir de la boucle
-                trouve = 1;
+                found = 1;
+                i = 5; // Sortir de la boucle
             }
         }
         i++;
     }
     
-    if (trouve == 0)
+    if (found == 0)
     {
         cout << "Erreur: Cette option n'existe pas" << endl;
     }
@@ -195,30 +196,23 @@ void Car::removeOption(string code)
 
 void Car::display() const
 {
-    cout << "=== Projet de voiture ===" << endl;
-    cout << "Nom du projet : " << name << endl;
-    cout << "--- Modele ---" << endl;
+    cout << "Nom: " << name << endl;
+    
+    // Afficher le modèle
     model.display();
     
-    cout << "--- Options ---" << endl;
-    bool hasOptions = false;
+    // Afficher les options
     for (int i = 0; i < 5; i++)
     {
         if (options[i] != nullptr)
         {
-            cout << "Option " << (i+1) << " :" << endl;
             options[i]->display();
-            hasOptions = true;
+            cout << endl;
         }
     }
     
-    if (!hasOptions)
-    {
-        cout << "Aucune option" << endl;
-    }
-    
-    cout << fixed << setprecision(2);
-    cout << "Prix total : " << getPrice() << " euros" << endl;
+    // Afficher le prix total
+    cout << "Prix total: " << fixed << setprecision(2) << getPrice() << " euros" << endl;
 }
 
 //=============================================================================
@@ -228,23 +222,26 @@ void Car::display() const
 // Opérateur d'affectation =
 Car& Car::operator=(const Car& car)
 {
+    // Copier le nom et le modèle
     name = car.name;
     setModel(car.model);
     
-    // Libérer les anciennes options
+    // Libérer la mémoire existante des options
     for (int i = 0; i < 5; i++)
     {
         if (options[i] != nullptr)
+        {
             delete options[i];
+        }
     }
     
-    // Réinitialiser
+    // Réinitialiser à nullptr
     for (int i = 0; i < 5; i++)
     {
         options[i] = nullptr;
     }
     
-    // Copier les nouvelles options
+    // Copier les options
     int i = 0;
     while (i < 5)
     {
@@ -261,27 +258,39 @@ Car& Car::operator=(const Car& car)
     return (*this);
 }
 
-// Opérateur + (Car + Option)
-Car Car::operator+(const Option& o) const
+// Opérateur de comparaison <
+int Car::operator<(const Car& car) const
+{
+    return comparePrice(car) == -1;
+}
+
+// Opérateur de comparaison >
+int Car::operator>(const Car& car) const
+{
+    return comparePrice(car) == 1;
+}
+
+// Opérateur de comparaison ==
+int Car::operator==(const Car& car) const
+{
+    return comparePrice(car) == 0;
+}
+
+// Opérateur d'addition + (Car + Option)
+Car Car::operator+(const Option& option) const
 {
     Car c2(*this);
-    c2.addOption(o);
+    c2.addOption(option);
     return c2;
 }
 
-// Opérateur + (Option + Car) - FONCTION AMIE
-Car operator+(const Option& o, const Car& c)
+// Opérateur de soustraction - (Car - Option)
+Car Car::operator-(const Option& option) const
 {
-    return c + o;
+    return (*this) - option.getCode();
 }
 
-// Opérateur - (Car - Option)
-Car Car::operator-(const Option& o) const
-{
-    return (*this) - o.getCode();
-}
-
-// Opérateur - (Car - string)
+// Opérateur de soustraction - (Car - string)
 Car Car::operator-(const string& code) const
 {
     Car c2(*this);
@@ -289,36 +298,34 @@ Car Car::operator-(const string& code) const
     return c2;
 }
 
-// Méthode privée de comparaison
-int Car::compP(const Car& car) const
+// Opérateur [] - Accès aux options par indice
+Option* Car::operator[](int i) const
+{
+    if (i < 0 || i >= 5)
+    {
+        return nullptr;
+    }
+    return options[i];
+}
+
+//=============================================================================
+// MÉTHODE AUXILIAIRE PRIVÉE
+//=============================================================================
+
+int Car::comparePrice(const Car& car) const
 {
     if (getPrice() < car.getPrice()) return -1;
     if (getPrice() > car.getPrice()) return 1;
     return 0;
 }
 
-// Opérateur 
-int Car::operator<(const Car& car) const
-{
-    return compP(car) == -1;
-}
+//=============================================================================
+// OPÉRATEUR D'INSERTION <<
+//=============================================================================
 
-// Opérateur >
-int Car::operator>(const Car& car) const
-{
-    return compP(car) == 1;
-}
-
-// Opérateur ==
-int Car::operator==(const Car& car) const
-{
-    return compP(car) == 0;
-}
-
-// Opérateur << (FONCTION AMIE)
 ostream& operator<<(ostream& s, const Car& car)
 {
-    s << "Nom: " << car.name << endl;
+    s << "Nom : " << car.name << endl;
     s << car.model;
     
     for (int i = 0; i < 5; i++)
@@ -326,17 +333,16 @@ ostream& operator<<(ostream& s, const Car& car)
         if (car.options[i] != nullptr)
         {
             s << *(car.options[i]);
-            s << endl;
         }
     }
     
     return s;
 }
 
-// Opérateur []
-Option* Car::operator[](const int i) const
+// Opérateur ami : Option + Car
+Car operator+(const Option& option, const Car& car)
 {
-    return options[i];
+    return car + option;
 }
 
 } // namespace carconfig

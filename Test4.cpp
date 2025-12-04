@@ -5,6 +5,8 @@ using namespace std;
 #include "Client.h"
 #include "Employee.h"
 
+using namespace carconfig;
+
 int  Menu();
 void Essai1();
 void Essai2();

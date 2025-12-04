@@ -6,7 +6,10 @@ using namespace std;
 
 namespace carconfig {
 
-// Constructeur par défaut
+//=============================================================================
+// CONSTRUCTEURS
+//=============================================================================
+
 Option::Option()
 {
     cout << "Option: Constructeur par defaut" << endl;
@@ -15,7 +18,6 @@ Option::Option()
     price = 0.0f;
 }
 
-// Constructeur d'initialisation
 Option::Option(const string& c, const string& l, float p)
 {
     cout << "Option: Constructeur d'initialisation" << endl;
@@ -24,7 +26,6 @@ Option::Option(const string& c, const string& l, float p)
     setPrice(p);
 }
 
-// Constructeur de copie
 Option::Option(const Option& opt)
 {
     cout << "Option: Constructeur de copie" << endl;
@@ -33,13 +34,19 @@ Option::Option(const Option& opt)
     price = opt.price;
 }
 
-// Destructeur
+//=============================================================================
+// DESTRUCTEUR
+//=============================================================================
+
 Option::~Option()
 {
     cout << "Option: Destructeur" << endl;
 }
 
-// Getters
+//=============================================================================
+// GETTERS
+//=============================================================================
+
 string Option::getCode() const
 {
     return code;
@@ -55,7 +62,10 @@ float Option::getPrice() const
     return price;
 }
 
-// Setters
+//=============================================================================
+// SETTERS
+//=============================================================================
+
 void Option::setCode(const string& c)
 {
     code = c;
@@ -71,22 +81,93 @@ void Option::setPrice(float p)
     price = p;
 }
 
-// Affichage
+//=============================================================================
+// AFFICHAGE
+//=============================================================================
+
 void Option::display() const
 {
     cout << "Code : " << code << endl;
     cout << "Intitule : " << label << endl;
     cout << fixed << setprecision(2);
-    cout << "Prix : " << price << endl;
+    cout << "Prix : " << price << " euros" << endl;
 }
+
+//=============================================================================
+// OPÉRATEURS D'INSERTION/EXTRACTION
+//=============================================================================
 
 ostream& operator<<(ostream& s, const Option& opt)
 {
     s << "Code : " << opt.code << endl;
     s << "Intitule : " << opt.label << endl;
     s << fixed << setprecision(2);
-    s << "Prix : " << opt.price << endl;
+    s << "Prix : " << opt.price << " euros" << endl;
     return s;
+}
+
+istream& operator>>(istream& s, Option& opt)
+{
+    string c, l;
+    float p;
+    
+    cout << "Encoder le code : ";
+    s >> c;
+    opt.setCode(c);
+    
+    s.ignore(); // Vider le buffer
+    
+    cout << "Encoder l'intitule : ";
+    getline(s, l);
+    opt.setLabel(l);
+    
+    cout << "Encoder le prix : ";
+    s >> p;
+    opt.setPrice(p);
+    
+    s.ignore(); // Vider le buffer
+    
+    return s;
+}
+
+//=============================================================================
+// OPÉRATEURS DE DÉCRÉMENTATION
+//=============================================================================
+
+// Pré-décrémentation : --option
+Option& Option::operator--()
+{
+    float p = getPrice();
+    
+    if ((p - 50.0) < 0.0)
+    {
+        cout << "Erreur: Le prix ne peut pas etre negatif" << endl;
+    }
+    else
+    {
+        setPrice(p - 50.0);
+    }
+    
+    return (*this);
+}
+
+// Post-décrémentation : option--
+Option Option::operator--(int)
+{
+    Option temp(*this);
+    
+    float p = getPrice();
+    
+    if ((p - 50.0) < 0.0)
+    {
+        cout << "Erreur: Le prix ne peut pas etre negatif" << endl;
+    }
+    else
+    {
+        setPrice(p - 50.0);
+    }
+    
+    return temp;
 }
 
 } // namespace carconfig

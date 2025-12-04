@@ -2,6 +2,8 @@
 #define OPTION_H
 
 #include <string>
+#include <iostream>
+
 using namespace std;
 
 namespace carconfig {
@@ -9,11 +11,13 @@ namespace carconfig {
 class Option
 {
     friend ostream& operator<<(ostream& s, const Option& opt);
+    friend istream& operator>>(istream& s, Option& opt);
+    
 private:
     string code;
     string label;
     float price;
-
+    
 public:
     Option();
     Option(const string& c, const string& l, float p);
@@ -30,7 +34,9 @@ public:
     
     void display() const;
     
-    
+    // OPÉRATEURS
+    Option& operator--();        // Pré-décrémentation
+    Option operator--(int);      // Post-décrémentation
 };
 
 } // namespace carconfig
