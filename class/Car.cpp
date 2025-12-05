@@ -1,4 +1,5 @@
 #include "Car.h"
+#include "OptionException.h"
 #include <iostream>
 #include <iomanip>
 
@@ -136,8 +137,7 @@ void Car::addOption(const Option& option)
         {
             if (options[i]->getCode() == option.getCode())
             {
-                cout << "Erreur: Cette option a deja ete ajoutee" << endl;
-                return;
+                throw OptionException("Cette option a deja ete ajoutee");
             }
         }
         i++;
@@ -153,8 +153,7 @@ void Car::addOption(const Option& option)
     // Vérifier s'il reste de la place
     if (i == 5)
     {
-        cout << "Erreur: La limite d'options a ete atteinte" << endl;
-        return;
+        throw OptionException("La limite d'options a ete atteinte");
     }
     
     // Ajouter l'option
@@ -186,7 +185,7 @@ void Car::removeOption(string code)
     
     if (found == 0)
     {
-        cout << "Erreur: Cette option n'existe pas" << endl;
+        throw OptionException("Cette option n'existe pas");
     }
 }
 

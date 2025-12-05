@@ -1,4 +1,5 @@
 #include "Employee.h"
+#include "PasswordException.h"
 #include <iostream>
 #include <cctype>
 
@@ -74,8 +75,7 @@ void Employee::setPassword(const string& pwd)
     // Vérification : minimum 6 caractères
     if (pwd.length() < 6)
     {
-        cout << "Erreur: Mot de passe trop court (minimum 6 caracteres)" << endl;
-        return;
+        throw PasswordException("Mot de passe trop court (minimum 6 caracteres)", PasswordException::INVALID_LENGTH);
     }
     
     // Vérification : contient au moins un chiffre
@@ -91,8 +91,7 @@ void Employee::setPassword(const string& pwd)
     
     if (!hasDigit)
     {
-        cout << "Erreur: Le mot de passe doit contenir au moins un chiffre" << endl;
-        return;
+        throw PasswordException("Le mot de passe doit contenir au moins un chiffre", PasswordException::DIGIT_MISSING);
     }
     
     // Vérification : contient au moins une lettre
@@ -108,8 +107,7 @@ void Employee::setPassword(const string& pwd)
     
     if (!hasAlpha)
     {
-        cout << "Erreur: Le mot de passe doit contenir au moins une lettre" << endl;
-        return;
+        throw PasswordException("Le mot de passe doit contenir au moins une lettre", PasswordException::ALPHA_MISSING);
     }
     
     // Libérer l'ancien mot de passe s'il existe
@@ -143,14 +141,11 @@ string Employee::getLogin() const
 
 string Employee::getPassword() const
 {
-    if (password != nullptr)
+    if (password == nullptr)
     {
-        return *password;
+        throw PasswordException("Pas de mot de passe pour cet employe", PasswordException::NO_PASSWORD);
     }
-    else
-    {
-        return "";
-    }
+    return *password;
 }
 
 string Employee::getRole() const

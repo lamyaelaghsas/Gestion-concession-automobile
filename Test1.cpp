@@ -2,6 +2,8 @@
 using namespace std;
 #include "Model.h"
 
+using namespace carconfig;
+
 // Quelques conseils avant de commencer...
 // * N'oubliez pas de tracer (cout << ...) tous les constructeurs et le destructeur !!! Ca, c'est pas un conseil,
 //   c'est obligatoire :-)

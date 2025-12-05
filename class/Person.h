@@ -7,7 +7,7 @@
 using namespace std;
 
 namespace carconfig {
-
+//CLASSE DE BASE
 class Person
 {
     friend ostream& operator<<(ostream& s, const Person& p);

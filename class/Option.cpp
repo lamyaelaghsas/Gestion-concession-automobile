@@ -1,4 +1,5 @@
 #include "Option.h"
+#include "OptionException.h"
 #include <iostream>
 #include <iomanip>
 
@@ -68,16 +69,28 @@ float Option::getPrice() const
 
 void Option::setCode(const string& c)
 {
+    if (c.length() != 4)
+    {
+        throw OptionException("Longueur invalide pour le code (Min/Max = 4)");
+    }
     code = c;
 }
 
 void Option::setLabel(const string& l)
 {
+    if (l.length() == 0)
+    {
+        throw OptionException("Longueur invalide pour l'intitule");
+    }
     label = l;
 }
 
 void Option::setPrice(float p)
 {
+    if (p < 0.0)
+    {
+        throw OptionException("Le prix ne peut pas etre negatif");
+    }
     price = p;
 }
 
@@ -141,13 +154,10 @@ Option& Option::operator--()
     
     if ((p - 50.0) < 0.0)
     {
-        cout << "Erreur: Le prix ne peut pas etre negatif" << endl;
-    }
-    else
-    {
-        setPrice(p - 50.0);
+        throw OptionException("Le prix ne peut pas etre negatif");
     }
     
+    setPrice(p - 50.0);
     return (*this);
 }
 
@@ -160,13 +170,10 @@ Option Option::operator--(int)
     
     if ((p - 50.0) < 0.0)
     {
-        cout << "Erreur: Le prix ne peut pas etre negatif" << endl;
-    }
-    else
-    {
-        setPrice(p - 50.0);
+        throw OptionException("Le prix ne peut pas etre negatif");
     }
     
+    setPrice(p - 50.0);
     return temp;
 }
 

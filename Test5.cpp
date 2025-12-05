@@ -75,10 +75,8 @@ int Menu()
 void Essai1()
 {
   cout << "----- 1. Test des methodes de Option susceptibles de lancer une OptionException --------" << endl;
-  // A COMPLETER : Traitez l'exception susceptible d'etre lancee par le bloc de code suivant (try...catch)
-  // en particulier : afficher le message de l'exception lancee
-
-  // ...
+  
+  try
   {
     cout << "----- 1.1 Test des setters la classe Option -----------------------------------" << endl;
     Option o1;
@@ -116,7 +114,11 @@ void Essai1()
     cout << "Nouvelle ristourne de 50 euros sur la derniere option encodee..." << endl;
     cout << "Voici l'option apres ristourne : " << --o2 << endl;  // !!!
   }
-  // ...
+  catch (OptionException& e)
+  {
+    cout << endl << "*** ERREUR OPTION ***" << endl;
+    e.display();
+  }
   
   cout << endl;
 }
@@ -125,10 +127,8 @@ void Essai1()
 void Essai2()
 {
   cout << "----- 2. Test des methodes de Car susceptibles de lancer une OptionException --------" << endl;
-  // A COMPLETER : Traitez l'exception susceptible d'etre lancee par le bloc de code suivant (try...catch)
-  // en particulier : afficher le message de l'exception lancee
-
-  // ...
+  
+  try
   {
     cout << "----- 2.1 Creation d'une voiture sans options -----------------------------------" << endl;
     Car c1("Projet_208_MrDugenou",Model("208 Access 1.0",68,Engine::Petrol,12500.0f));
@@ -167,7 +167,11 @@ void Essai2()
     cout << "----- 2.4 La voiture apres le retrait de l'option -------------------------------" << endl;
     cout << c1 << endl;
   }
-  // ...
+  catch (OptionException& e)
+  {
+    cout << endl << "*** ERREUR OPTION ***" << endl;
+    e.display();
+  }
   
   cout << endl;
 }
@@ -176,10 +180,8 @@ void Essai2()
 void Essai3()
 {
   cout << "----- 3. Test des methodes de Employee susceptibles de lancer une PasswordException --------" << endl;
-  // A COMPLETER : Traitez l'exception susceptible d'etre lancee par le bloc de code suivant (try...catch)
-  // en particulier : Tester le code de l'erreur et affiche la cause exacte de l'erreur.
-
-  // ...
+  
+  try
   {
     Employee e1("Dupont","Michel",2,"dupomich",Employee::ADMINISTRATIVE);
     cout << e1 << endl << endl;
@@ -197,7 +199,32 @@ void Essai3()
     cout << "Affichage du mot de passe :" << endl;
     cout << "Mot de passe = " << e1.getPassword() << endl;  // !!!
   }
-  // ...
+  catch (PasswordException& e)
+  {
+    cout << endl << "*** ERREUR MOT DE PASSE ***" << endl;
+    e.display();
+    cout << "Code d'erreur : " << e.getCode() << endl;
+    
+    // Affichage détaillé selon le code d'erreur
+    switch(e.getCode())
+    {
+      case PasswordException::INVALID_LENGTH:
+        cout << "Cause : La taille du mot de passe doit etre au moins 6 caracteres" << endl;
+        break;
+      case PasswordException::ALPHA_MISSING:
+        cout << "Cause : Le mot de passe doit contenir au moins une lettre" << endl;
+        break;
+      case PasswordException::DIGIT_MISSING:
+        cout << "Cause : Le mot de passe doit contenir au moins un chiffre" << endl;
+        break;
+      case PasswordException::NO_PASSWORD:
+        cout << "Cause : Pas de mot de passe pour ce compte" << endl;
+        break;
+      default:
+        cout << "Cause : Erreur inconnue" << endl;
+        break;
+    }
+  }
   
   cout << endl;
 }
@@ -206,9 +233,8 @@ void Essai3()
 void Essai4()
 {
   cout << "----- 4. Gestion de plusieurs exceptions simultanement ---" << endl;
-  // A COMPLETER : Traitez TOUTES les exceptions susceptible d'etre lancee par le bloc de code suivant (try...catch)
-
-  // ...
+  
+  try
   {
     Option o;
     cout << "Encodez une option : " << endl;
@@ -223,7 +249,41 @@ void Essai4()
     cout << "Affichage du mot de passe :" << endl;
     cout << "Mot de passe = " << e1.getPassword() << endl;
   }
-  // ...
+  catch (OptionException& e)
+  {
+    cout << endl << "*** ERREUR OPTION ***" << endl;
+    e.display();
+  }
+  catch (PasswordException& e)
+  {
+    cout << endl << "*** ERREUR MOT DE PASSE ***" << endl;
+    e.display();
+    cout << "Code d'erreur : " << e.getCode() << endl;
+    
+    switch(e.getCode())
+    {
+      case PasswordException::INVALID_LENGTH:
+        cout << "Cause : La taille du mot de passe doit etre au moins 6 caracteres" << endl;
+        break;
+      case PasswordException::ALPHA_MISSING:
+        cout << "Cause : Le mot de passe doit contenir au moins une lettre" << endl;
+        break;
+      case PasswordException::DIGIT_MISSING:
+        cout << "Cause : Le mot de passe doit contenir au moins un chiffre" << endl;
+        break;
+      case PasswordException::NO_PASSWORD:
+        cout << "Cause : Pas de mot de passe pour ce compte" << endl;
+        break;
+      default:
+        cout << "Cause : Erreur inconnue" << endl;
+        break;
+    }
+  }
+  catch (Exception& e)
+  {
+    cout << endl << "*** ERREUR GENERALE ***" << endl;
+    e.display();
+  }
   
   cout << endl;
 }

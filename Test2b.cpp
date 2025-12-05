@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Option.h"
 
+using namespace carconfig;
 // Tests de la classe Option seule
 
 int main()
