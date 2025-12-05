@@ -2,6 +2,8 @@
 #include "OptionException.h"
 #include <iostream>
 #include <iomanip>
+#include <sstream>
+#include <fstream>
 
 using namespace std;
 
@@ -106,39 +108,76 @@ void Option::display() const
     cout << "Prix : " << price << " euros" << endl;
 }
 
+string Option::toString() const
+{
+    stringstream ss;
+    ss << fixed << setprecision(2);
+    ss << "Code : " << code << endl;
+    ss << "Intitule : " << label << endl;
+    ss << "Prix : " << price << " euros";
+    return ss.str();
+}
+
 //=============================================================================
-// OPÉRATEURS D'INSERTION/EXTRACTION
+// OPÉRATEURS D'INSERTION/EXTRACTION (FORMAT XML pour sérialisation)
 //=============================================================================
 
 ostream& operator<<(ostream& s, const Option& opt)
 {
-    s << "Code : " << opt.code << endl;
-    s << "Intitule : " << opt.label << endl;
-    s << fixed << setprecision(2);
-    s << "Prix : " << opt.price << " euros" << endl;
+    s << "<Option>" << endl;
+    s << "<code>" << endl;
+    s << opt.code << endl;
+    s << "</code>" << endl;
+    s << "<label>" << endl;
+    s << opt.label << endl;
+    s << "</label>" << endl;
+    s << "<price>" << endl;
+    s << opt.price << endl;
+    s << "</price>" << endl;
+    s << "</Option>" << endl;
+    
     return s;
 }
 
 istream& operator>>(istream& s, Option& opt)
 {
-    string c, l;
-    float p;
+    string line;
     
-    cout << "Encoder le code : ";
-    s >> c;
-    opt.setCode(c);
+    // Lire <Option>
+    getline(s, line);
     
-    s.ignore(); // Vider le buffer
+    // Lire <code>
+    getline(s, line);
     
-    cout << "Encoder l'intitule : ";
-    getline(s, l);
-    opt.setLabel(l);
+    // Lire la valeur du code
+    getline(s, line);
+    opt.setCode(line);
     
-    cout << "Encoder le prix : ";
-    s >> p;
-    opt.setPrice(p);
+    // Lire </code>
+    getline(s, line);
     
-    s.ignore(); // Vider le buffer
+    // Lire <label>
+    getline(s, line);
+    
+    // Lire la valeur du label
+    getline(s, line);
+    opt.setLabel(line);
+    
+    // Lire </label>
+    getline(s, line);
+    
+    // Lire <price>
+    getline(s, line);
+    
+    // Lire la valeur du prix
+    getline(s, line);
+    opt.setPrice(stof(line));
+    
+    // Lire </price>
+    getline(s, line);
+    
+    // Lire </Option>
+    getline(s, line);
     
     return s;
 }

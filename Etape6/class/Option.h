@@ -33,6 +33,7 @@ public:
     void setPrice(float p);
     
     void display() const;
+    string toString() const;  // Pour affichage console
     
     // OPÉRATEURS
     Option& operator--();        // Pré-décrémentation

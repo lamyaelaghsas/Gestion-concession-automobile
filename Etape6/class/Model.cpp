@@ -2,6 +2,8 @@
 #include <iostream>
 #include <iomanip>
 #include <cstring>
+#include <sstream>
+#include <fstream>
 
 using namespace std;
 
@@ -122,71 +124,130 @@ void Model::display() const
 }
 
 //=============================================================================
-// OPÉRATEURS D'INSERTION/EXTRACTION
+// OPÉRATEURS D'INSERTION/EXTRACTION (FORMAT XML pour sérialisation)
 //=============================================================================
 
 ostream& operator<<(ostream& s, const Model& m)
 {
-    s << "Nom : " << m.name << endl;
-    s << "Puissance : " << m.power << " ch" << endl;
-    s << "Moteur : ";
+    s << "<Model>" << endl;
+    s << "<name>" << endl;
+    s << m.name << endl;
+    s << "</name>" << endl;
+    s << "<power>" << endl;
+    s << m.power << endl;
+    s << "</power>" << endl;
+    s << "<engine>" << endl;
+    
+    // Écriture du type de moteur en texte
     switch(m.engine) {
-        case Engine::Petrol: s << "Essence"; break;
-        case Engine::Diesel: s << "Diesel"; break;
-        case Engine::Electric: s << "Electrique"; break;
-        case Engine::Hybrid: s << "Hybride"; break;
+        case Engine::Petrol: s << "essence"; break;
+        case Engine::Diesel: s << "diesel"; break;
+        case Engine::Electric: s << "electrique"; break;
+        case Engine::Hybrid: s << "hybride"; break;
     }
     s << endl;
-    s << fixed << setprecision(2);
-    s << "Prix de base : " << m.basePrice << " euros" << endl;
+    
+    s << "</engine>" << endl;
+    s << "<basePrice>" << endl;
+    s << m.basePrice << endl;
+    s << "</basePrice>" << endl;
+    s << "</Model>" << endl;
+    
     return s;
 }
 
 istream& operator>>(istream& s, Model& m)
 {
-    string n;
-    int p, choix;
-    Engine eng;
-    float bp;
+    string line;
     
-    cout << "Encoder le nom : ";
-    getline(s, n);
+    // Lire <Model>
+    getline(s, line);
     
-    cout << "Encoder la puissance : ";
-    s >> p;
+    // Lire <name>
+    getline(s, line);
     
-    do
-    {
-        cout << "Quel type de moteur ?" << endl;
-        cout << "1 - Essence" << endl;
-        cout << "2 - Diesel" << endl;
-        cout << "3 - Electrique" << endl;
-        cout << "4 - Hybride" << endl;
-        cout << "Choix : ";
-        s >> choix;
-        
-        if (choix <= 0 || choix > 4)
-            cout << "CHOIX INVALIDE : ENCODER ENCORE\n\n";
-    }
-    while (choix <= 0 || choix > 4);
+    // Lire la valeur du name
+    getline(s, line);
+    m.setName(line.c_str());
     
-    switch(choix)
-    {
-        case 1: eng = Engine::Petrol; break;
-        case 2: eng = Engine::Diesel; break;
-        case 3: eng = Engine::Electric; break;
-        case 4: eng = Engine::Hybrid; break;
-    }
+    // Lire </name>
+    getline(s, line);
     
-    cout << "Encoder le prix de base : ";
-    s >> bp;
+    // Lire <power>
+    getline(s, line);
     
-    m.setName(n.c_str());
-    m.setPower(p);
-    m.setEngine(eng);
-    m.setBasePrice(bp);
+    // Lire la valeur du power
+    getline(s, line);
+    m.setPower(stoi(line));
+    
+    // Lire </power>
+    getline(s, line);
+    
+    // Lire <engine>
+    getline(s, line);
+    
+    // Lire la valeur du moteur
+    getline(s, line);
+    if (line == "essence") m.setEngine(Engine::Petrol);
+    else if (line == "diesel") m.setEngine(Engine::Diesel);
+    else if (line == "electrique") m.setEngine(Engine::Electric);
+    else if (line == "hybride") m.setEngine(Engine::Hybrid);
+    
+    // Lire </engine>
+    getline(s, line);
+    
+    // Lire <basePrice>
+    getline(s, line);
+    
+    // Lire la valeur du basePrice
+    getline(s, line);
+    m.setBasePrice(stof(line));
+    
+    // Lire </basePrice>
+    getline(s, line);
+    
+    // Lire </Model>
+    getline(s, line);
     
     return s;
+}
+
+//=============================================================================
+// MÉTHODE toString() POUR AFFICHAGE CONSOLE
+//=============================================================================
+
+string Model::toString() const
+{
+    stringstream ss;
+    ss << "Nom : " << name << endl;
+    ss << "Puissance : " << power << " ch" << endl;
+    ss << "Moteur : ";
+    switch(engine) {
+        case Engine::Petrol: ss << "Essence"; break;
+        case Engine::Diesel: ss << "Diesel"; break;
+        case Engine::Electric: ss << "Electrique"; break;
+        case Engine::Hybrid: ss << "Hybride"; break;
+    }
+    ss << endl;
+    ss << fixed << setprecision(2);
+    ss << "Prix de base : " << basePrice << " euros";
+    return ss.str();
+}
+
+//=============================================================================
+// OPÉRATEUR D'AFFECTATION
+//=============================================================================
+
+Model& Model::operator=(const Model& m)
+{
+    if (this != &m)
+    {
+        setName(m.getName());
+        setPower(m.getPower());
+        setEngine(m.getEngine());
+        setBasePrice(m.getBasePrice());
+    }
+    return *this;
 }
 
 } // namespace carconfig

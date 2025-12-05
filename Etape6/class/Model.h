@@ -34,6 +34,10 @@ public:
   void setBasePrice(float bp);
   float getBasePrice() const;
   void display() const;
+  string toString() const;  // Pour affichage console
+  
+  // Opérateur d'affectation
+  Model& operator=(const Model& m);
 };
 
 } // namespace carconfig

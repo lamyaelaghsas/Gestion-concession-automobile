@@ -11,6 +11,7 @@ namespace carconfig {
 class Client : public Actor
 {
     friend ostream& operator<<(ostream& s, const Client& c);
+    friend istream& operator>>(istream& s, Client& c);
     
 private:
     string gsm;  // Numéro de téléphone
