@@ -13,7 +13,6 @@ namespace carconfig {
 
 Model::Model() // constructeur par défaut
 {
-    cout << "Model: Constructeur par defaut" << endl;
     name = nullptr;
     setName("default");  
     setPower(80);
@@ -23,7 +22,6 @@ Model::Model() // constructeur par défaut
 
 Model::Model(const char* n, int p, Engine e, float bp) // constructeur d'initialisation
 {
-    cout << "Model: Constructeur d'initialisation" << endl;
     name = nullptr;
     setName(n);
     setPower(p);
@@ -33,7 +31,6 @@ Model::Model(const char* n, int p, Engine e, float bp) // constructeur d'initial
 
 Model::Model(const Model& mod) // constructeur de copie
 {
-    cout << "Model: Constructeur de copie" << endl;
     name = nullptr;
     setName(mod.getName());
     setPower(mod.getPower());
@@ -47,7 +44,6 @@ Model::Model(const Model& mod) // constructeur de copie
 
 Model::~Model()
 {
-    cout << "Model: Destructeur" << endl;
     if (name != nullptr) delete[] name;
 }
 

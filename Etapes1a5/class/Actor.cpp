@@ -14,19 +14,16 @@ int Actor::currentNumber = 0;
 
 Actor::Actor() : Person()
 {
-    cout << "Actor: Constructeur par defaut" << endl;
     setId(0);
 }
 
 Actor::Actor(const string& lastName, const string& firstName, int id) : Person(lastName, firstName)
 {
-    cout << "Actor: Constructeur d'initialisation" << endl;
     setId(id);
 }
 
 Actor::Actor(const Actor& a) : Person(a)
 {
-    cout << "Actor: Constructeur de copie" << endl;
     setId(a.getId());
 }
 
@@ -36,7 +33,6 @@ Actor::Actor(const Actor& a) : Person(a)
 
 Actor::~Actor()
 {
-    cout << "Actor: Destructeur" << endl;
 }
 
 //=============================================================================

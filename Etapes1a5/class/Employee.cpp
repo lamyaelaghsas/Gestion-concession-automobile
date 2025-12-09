@@ -17,7 +17,6 @@ const string Employee::SELLER = "Vendeur";
 
 Employee::Employee() : Actor()
 {
-    cout << "Employee: Constructeur par defaut" << endl;
     setLogin("pas de login");
     password = nullptr;
     setRole("Vendeur");
@@ -27,7 +26,6 @@ Employee::Employee(const string& lastName, const string& firstName, int id,
                    const string& login, const string& role) 
     : Actor(lastName, firstName, id)
 {
-    cout << "Employee: Constructeur d'initialisation" << endl;
     password = nullptr;
     setLogin(login);
     setRole(role);
@@ -35,7 +33,6 @@ Employee::Employee(const string& lastName, const string& firstName, int id,
 
 Employee::Employee(const Employee& e) : Actor(e)
 {
-    cout << "Employee: Constructeur de copie" << endl;
     password = nullptr;
     
     setLogin(e.getLogin());
@@ -54,7 +51,6 @@ Employee::Employee(const Employee& e) : Actor(e)
 
 Employee::~Employee()
 {
-    cout << "Employee: Destructeur" << endl;
     if (password != nullptr)
     {
         delete password;

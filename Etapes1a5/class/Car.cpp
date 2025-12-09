@@ -13,7 +13,6 @@ namespace carconfig {
 
 Car::Car()
 {
-    cout << "Car: Constructeur par defaut" << endl;
     name = "";
     
     // Initialiser toutes les options à nullptr
@@ -25,7 +24,6 @@ Car::Car()
 
 Car::Car(const string& n, const Model& m)
 {
-    cout << "Car: Constructeur d'initialisation" << endl;
     name = n;
     setModel(m);
     
@@ -38,7 +36,6 @@ Car::Car(const string& n, const Model& m)
 
 Car::Car(const Car& car)
 {
-    cout << "Car: Constructeur de copie" << endl;
     name = car.name;
     setModel(car.model);
     
@@ -69,7 +66,6 @@ Car::Car(const Car& car)
 
 Car::~Car()
 {
-    cout << "Car: Destructeur" << endl;
     for (int i = 0; i < 5; i++)
     {
         if (options[i] != nullptr)

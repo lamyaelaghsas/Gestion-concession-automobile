@@ -13,7 +13,6 @@ namespace carconfig {
 
 Option::Option()
 {
-    cout << "Option: Constructeur par defaut" << endl;
     code = "";
     label = "";
     price = 0.0f;
@@ -21,7 +20,6 @@ Option::Option()
 
 Option::Option(const string& c, const string& l, float p)
 {
-    cout << "Option: Constructeur d'initialisation" << endl;
     setCode(c);
     setLabel(l);
     setPrice(p);
@@ -29,7 +27,6 @@ Option::Option(const string& c, const string& l, float p)
 
 Option::Option(const Option& opt)
 {
-    cout << "Option: Constructeur de copie" << endl;
     code = opt.code;
     label = opt.label;
     price = opt.price;
@@ -41,7 +38,6 @@ Option::Option(const Option& opt)
 
 Option::~Option()
 {
-    cout << "Option: Destructeur" << endl;
 }
 
 //=============================================================================

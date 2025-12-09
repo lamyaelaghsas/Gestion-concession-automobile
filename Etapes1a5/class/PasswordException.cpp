@@ -10,19 +10,16 @@ namespace carconfig {
 
 PasswordException::PasswordException() : Exception("Constructeur par defaut PasswordException")
 {
-    cout << "PasswordException: Constructeur par defaut" << endl;
     setCode(0);
 }
 
 PasswordException::PasswordException(const string& message, int code) : Exception(message)
 {
-    cout << "PasswordException: Constructeur d'initialisation" << endl;
     setCode(code);
 }
 
 PasswordException::PasswordException(const PasswordException& e) : Exception(e)
 {
-    cout << "PasswordException: Constructeur de copie" << endl;
     setCode(e.getCode());
 }
 
@@ -32,7 +29,6 @@ PasswordException::PasswordException(const PasswordException& e) : Exception(e)
 
 PasswordException::~PasswordException()
 {
-    cout << "PasswordException: Destructeur" << endl;
 }
 
 //=============================================================================

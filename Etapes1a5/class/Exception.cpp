@@ -10,19 +10,16 @@ namespace carconfig {
 
 Exception::Exception()
 {
-    cout << "Exception: Constructeur par defaut" << endl;
     setMessage("Defaut Message");
 }
 
 Exception::Exception(const string& message)
 {
-    cout << "Exception: Constructeur d'initialisation" << endl;
     setMessage(message);
 }
 
 Exception::Exception(const Exception& e)
 {
-    cout << "Exception: Constructeur de copie" << endl;
     setMessage(e.getMessage());
 }
 
@@ -32,7 +29,6 @@ Exception::Exception(const Exception& e)
 
 Exception::~Exception()
 {
-    cout << "Exception: Destructeur" << endl;
 }
 
 //=============================================================================

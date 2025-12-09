@@ -11,20 +11,17 @@ namespace carconfig {
 
 Client::Client() : Actor()
 {
-    cout << "Client: Constructeur par defaut" << endl;
     setGsm("0000/00.00.00");
 }
 
 Client::Client(const string& lastName, const string& firstName, int id, const string& gsm)
     : Actor(lastName, firstName, id)
 {
-    cout << "Client: Constructeur d'initialisation" << endl;
     setGsm(gsm);
 }
 
 Client::Client(const Client& c) : Actor(c)
 {
-    cout << "Client: Constructeur de copie" << endl;
     setGsm(c.getGsm());
 }
 
@@ -34,7 +31,6 @@ Client::Client(const Client& c) : Actor(c)
 
 Client::~Client()
 {
-    cout << "Client: Destructeur" << endl;
 }
 
 //=============================================================================

@@ -11,21 +11,18 @@ namespace carconfig {
 
 Person::Person()
 {
-    cout << "Person: Constructeur par defaut" << endl;
     setLastName("NomPersonne");
     setFirstName("PrenomPersonne");
 }
 
 Person::Person(const string& lastName, const string& firstName)
 {
-    cout << "Person: Constructeur d'initialisation" << endl;
     setLastName(lastName);
     setFirstName(firstName);
 }
 
 Person::Person(const Person& p)
 {
-    cout << "Person: Constructeur de copie" << endl;
     setLastName(p.getLastName());
     setFirstName(p.getFirstName());
 }
@@ -36,7 +33,6 @@ Person::Person(const Person& p)
 
 Person::~Person()
 {
-    cout << "Person: Destructeur" << endl;
 }
 
 //=============================================================================

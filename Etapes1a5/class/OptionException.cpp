@@ -10,17 +10,14 @@ namespace carconfig {
 
 OptionException::OptionException() : Exception()
 {
-    cout << "OptionException: Constructeur par defaut" << endl;
 }
 
 OptionException::OptionException(const string& message) : Exception(message)
 {
-    cout << "OptionException: Constructeur d'initialisation" << endl;
 }
 
 OptionException::OptionException(const OptionException& e) : Exception(e)
 {
-    cout << "OptionException: Constructeur de copie" << endl;
 }
 
 //=============================================================================
@@ -29,7 +26,6 @@ OptionException::OptionException(const OptionException& e) : Exception(e)
 
 OptionException::~OptionException()
 {
-    cout << "OptionException: Destructeur" << endl;
 }
 
 //=============================================================================
