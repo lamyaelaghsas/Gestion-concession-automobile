@@ -43,6 +43,7 @@ public:
     
     // Opérateurs
     Employee& operator=(const Employee& e);
+    bool operator<(const Employee& e) const;  // Pour set<Employee> - tri alphabétique
     
     // Affichage
     void display() const;
@@ -57,4 +58,4 @@ public:
 
 } // namespace carconfig
 
-#endif
+#endif // EMPLOYEE_H

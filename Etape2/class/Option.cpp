@@ -1,5 +1,4 @@
 #include "Option.h"
-#include "OptionException.h"
 #include <iostream>
 #include <iomanip>
 
@@ -7,10 +6,7 @@ using namespace std;
 
 namespace carconfig {
 
-//=============================================================================
-// CONSTRUCTEURS
-//=============================================================================
-
+// Constructeur par défaut
 Option::Option()
 {
     code = "";
@@ -18,6 +14,7 @@ Option::Option()
     price = 0.0f;
 }
 
+// Constructeur d'initialisation
 Option::Option(const string& c, const string& l, float p)
 {
     setCode(c);
@@ -25,6 +22,7 @@ Option::Option(const string& c, const string& l, float p)
     setPrice(p);
 }
 
+// Constructeur de copie
 Option::Option(const Option& opt)
 {
     code = opt.code;
@@ -32,18 +30,12 @@ Option::Option(const Option& opt)
     price = opt.price;
 }
 
-//=============================================================================
-// DESTRUCTEUR
-//=============================================================================
-
+// Destructeur
 Option::~Option()
 {
 }
 
-//=============================================================================
-// GETTERS
-//=============================================================================
-
+// Getters
 string Option::getCode() const
 {
     return code;
@@ -59,118 +51,32 @@ float Option::getPrice() const
     return price;
 }
 
-//=============================================================================
-// SETTERS
-//=============================================================================
-
+// Setters
 void Option::setCode(const string& c)
 {
-    if (c.length() != 4)
-    {
-        throw OptionException("Longueur invalide pour le code (Min/Max = 4)");
-    }
+    if(c.length() > 4 || c.length() < 4) 
+        return;
+
     code = c;
 }
 
 void Option::setLabel(const string& l)
 {
-    if (l.length() == 0)
-    {
-        throw OptionException("Longueur invalide pour l'intitule");
-    }
     label = l;
 }
 
 void Option::setPrice(float p)
 {
-    if (p < 0.0)
-    {
-        throw OptionException("Le prix ne peut pas etre negatif");
-    }
     price = p;
 }
 
-//=============================================================================
-// AFFICHAGE
-//=============================================================================
-
+// Affichage
 void Option::display() const
 {
     cout << "Code : " << code << endl;
     cout << "Intitule : " << label << endl;
     cout << fixed << setprecision(2);
-    cout << "Prix : " << price << " euros" << endl;
-}
-
-//=============================================================================
-// OPÉRATEURS D'INSERTION/EXTRACTION
-//=============================================================================
-
-ostream& operator<<(ostream& s, const Option& opt)
-{
-    s << "Code : " << opt.code << endl;
-    s << "Intitule : " << opt.label << endl;
-    s << fixed << setprecision(2);
-    s << "Prix : " << opt.price << " euros" << endl;
-    return s;
-}
-
-istream& operator>>(istream& s, Option& opt)
-{
-    string c, l;
-    float p;
-    
-    cout << "Encoder le code : ";
-    s >> c;
-    opt.setCode(c);
-    
-    s.ignore(); // Vider le buffer
-    
-    cout << "Encoder l'intitule : ";
-    getline(s, l);
-    opt.setLabel(l);
-    
-    cout << "Encoder le prix : ";
-    s >> p;
-    opt.setPrice(p);
-    
-    s.ignore(); // Vider le buffer
-    
-    return s;
-}
-
-//=============================================================================
-// OPÉRATEURS DE DÉCRÉMENTATION
-//=============================================================================
-
-// Pré-décrémentation : --option
-Option& Option::operator--()
-{
-    float p = getPrice();
-    
-    if ((p - 50.0) < 0.0)
-    {
-        throw OptionException("Le prix ne peut pas etre negatif");
-    }
-    
-    setPrice(p - 50.0);
-    return (*this);
-}
-
-// Post-décrémentation : option--
-Option Option::operator--(int)
-{
-    Option temp(*this);
-    
-    float p = getPrice();
-    
-    if ((p - 50.0) < 0.0)
-    {
-        throw OptionException("Le prix ne peut pas etre negatif");
-    }
-    
-    setPrice(p - 50.0);
-    return temp;
+    cout << "Prix : " << price << endl;
 }
 
 } // namespace carconfig

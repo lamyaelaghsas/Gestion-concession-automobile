@@ -210,6 +210,11 @@ ostream& operator<<(ostream& s, const Employee& e)
     return s;
 }
 
+// Opérateur de comparaison pour set<Employee> (tri alphabétique par nom)
+bool Employee::operator<(const Employee& e) const {
+    return getLastName() < e.getLastName();
+}
+
 //=============================================================================
 // MÉTHODES VIRTUELLES
 //=============================================================================

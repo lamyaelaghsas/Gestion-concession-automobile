@@ -11,6 +11,7 @@ namespace carconfig {
 class Client : public Actor
 {
     friend ostream& operator<<(ostream& s, const Client& c);
+    friend istream& operator>>(istream& s, Client& c);
     
 private:
     string gsm;  // Numéro de téléphone
@@ -32,6 +33,7 @@ public:
     
     // Opérateurs
     Client& operator=(const Client& c);
+    bool operator<(const Client& c) const;  // Pour set<Client> - tri alphabétique
     
     // Affichage
     void display() const;
@@ -43,4 +45,4 @@ public:
 
 } // namespace carconfig
 
-#endif
+#endif // CLIENT_H

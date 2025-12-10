@@ -77,12 +77,80 @@ Client& Client::operator=(const Client& c)
 
 ostream& operator<<(ostream& s, const Client& c)
 {
-    s << "CLIENT:" << endl;
-    s << "Nom: " << c.getLastName() << endl;
-    s << "Prenom: " << c.getFirstName() << endl;
-    s << "ID: " << c.getId() << endl;
-    s << "GSM: " << c.getGsm() << endl;
+    s << "<Client>" << endl;
+    s << "<lastName>" << endl;
+    s << c.getLastName() << endl;
+    s << "</lastName>" << endl;
+    s << "<firstName>" << endl;
+    s << c.getFirstName() << endl;
+    s << "</firstName>" << endl;
+    s << "<id>" << endl;
+    s << c.getId() << endl;
+    s << "</id>" << endl;
+    s << "<gsm>" << endl;
+    s << c.getGsm() << endl;
+    s << "</gsm>" << endl;
+    s << "</Client>" << endl;
+    
     return s;
+}
+
+istream& operator>>(istream& s, Client& c)
+{
+    string line;
+    
+    // Lire <Client>
+    getline(s, line);
+    
+    // Lire <lastName>
+    getline(s, line);
+    
+    // Lire la valeur du lastName
+    getline(s, line);
+    c.setLastName(line);
+    
+    // Lire </lastName>
+    getline(s, line);
+    
+    // Lire <firstName>
+    getline(s, line);
+    
+    // Lire la valeur du firstName
+    getline(s, line);
+    c.setFirstName(line);
+    
+    // Lire </firstName>
+    getline(s, line);
+    
+    // Lire <id>
+    getline(s, line);
+    
+    // Lire la valeur de l'id
+    getline(s, line);
+    c.setId(stoi(line));
+    
+    // Lire </id>
+    getline(s, line);
+    
+    // Lire <gsm>
+    getline(s, line);
+    
+    // Lire la valeur du gsm
+    getline(s, line);
+    c.setGsm(line);
+    
+    // Lire </gsm>
+    getline(s, line);
+    
+    // Lire </Client>
+    getline(s, line);
+    
+    return s;
+}
+
+// Opérateur de comparaison pour set<Client> (tri alphabétique par nom)
+bool Client::operator<(const Client& c) const {
+    return getLastName() < c.getLastName();
 }
 
 //=============================================================================

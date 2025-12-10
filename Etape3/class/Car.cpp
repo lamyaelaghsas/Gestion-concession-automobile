@@ -132,7 +132,7 @@ void Car::addOption(const Option& option)
         {
             if (options[i]->getCode() == option.getCode())
             {
-                return;  // Pas d'exception à l'étape 3
+                return;   
             }
         }
         i++;
@@ -148,7 +148,7 @@ void Car::addOption(const Option& option)
     // Vérifier s'il reste de la place
     if (i == 5)
     {
-        return;  // Pas d'exception à l'étape 3
+        return;   
     }
     
     // Ajouter l'option
@@ -176,7 +176,7 @@ void Car::removeOption(string code)
         i++;
     }
     
-    // Pas d'exception à l'étape 3
+     
 }
 
 //=============================================================================
@@ -244,22 +244,22 @@ Car& Car::operator=(const Car& car)
         i++;
     }
     
-    return (*this);
+    return (*this); //retourne lobjet courant
 }
 
-// Opérateur de comparaison <
+// Opérateur de comparaison < (plus petit)
 int Car::operator<(const Car& car) const
 {
     return comparePrice(car) == -1;
 }
 
-// Opérateur de comparaison >
+// Opérateur de comparaison > (plus grand)
 int Car::operator>(const Car& car) const
 {
     return comparePrice(car) == 1;
 }
 
-// Opérateur de comparaison ==
+// Opérateur de comparaison == (egal)
 int Car::operator==(const Car& car) const
 {
     return comparePrice(car) == 0;
@@ -273,7 +273,7 @@ Car Car::operator+(const Option& option) const
     return c2;
 }
 
-// Opérateur de soustraction - (Car - Option)
+// Opérateur de soustraction - (Car - Option) L'option est identifiée par son code
 Car Car::operator-(const Option& option) const
 {
     return (*this) - option.getCode();
@@ -282,9 +282,9 @@ Car Car::operator-(const Option& option) const
 // Opérateur de soustraction - (Car - string)
 Car Car::operator-(const string& code) const
 {
-    Car c2(*this);
-    c2.removeOption(code);
-    return c2;
+    Car c2(*this); //on cree la copie
+    c2.removeOption(code); //on supp l'option par son code dans la copie
+    return c2; //on retourne la voiture modifiée
 }
 
 // Opérateur [] - Accès aux options par indice

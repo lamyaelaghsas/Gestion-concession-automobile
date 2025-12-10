@@ -2,6 +2,11 @@
 #include "Client.h"
 #include "XmlFileSerializer.hpp"
 
+#include "XmlFileSerializerException.h"
+
+using namespace carconfig;  // ← AJOUTE CETTE LIGNE ICI
+
+
 using namespace std;
 
 int  Menu();

@@ -64,10 +64,9 @@ float Option::getPrice() const
 
 void Option::setCode(const string& c)
 {
-    if (c.length() != 4)
-    {
-        return;  // Pas d'exception à l'étape 3
-    }
+    if(c.length() > 4 || c.length() < 4) 
+        return;
+    
     code = c;
 }
 
@@ -75,7 +74,7 @@ void Option::setLabel(const string& l)
 {
     if (l.length() == 0)
     {
-        return;  // Pas d'exception à l'étape 3
+        return;  
     }
     label = l;
 }
@@ -84,7 +83,7 @@ void Option::setPrice(float p)
 {
     if (p < 0.0)
     {
-        return;  // Pas d'exception à l'étape 3
+        return;  
     }
     price = p;
 }

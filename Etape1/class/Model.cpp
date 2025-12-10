@@ -58,7 +58,7 @@ void Model::setPower(int p)
 
 void Model::setName(const char* n)
 {
-    if (name != nullptr) delete[] name;
+    if (name != nullptr) delete[] name; // libérer l’ancienne mémoire si elle existait
     name = new char[strlen(n)+1];
     strcpy(name, n);
 }

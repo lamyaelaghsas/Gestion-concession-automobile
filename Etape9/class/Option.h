@@ -2,38 +2,42 @@
 #define OPTION_H
 
 #include <string>
+#include <iostream>
+
 using namespace std;
 
 namespace carconfig {
 
 class Option
 {
+    friend ostream& operator<<(ostream& s, const Option& opt);
+    friend istream& operator>>(istream& s, Option& opt);
+    
 private:
-    string code;    // Code de 4 caractères (ex: "0MM0")
-    string label;   // Intitulé (ex: "Peinture métallisée")
-    float price;    // Prix de l'option
-
+    string code;
+    string label;
+    float price;
+    
 public:
-    // Constructeurs
     Option();
     Option(const string& c, const string& l, float p);
     Option(const Option& opt);
-    
-    // Destructeur
     ~Option();
     
-    // Getters
     string getCode() const;
     string getLabel() const;
     float getPrice() const;
     
-    // Setters
     void setCode(const string& c);
     void setLabel(const string& l);
     void setPrice(float p);
     
-    // Affichage
     void display() const;
+    string toString() const;  // Pour affichage console
+    
+    // OPÉRATEURS
+    Option& operator--();        // Pré-décrémentation
+    Option operator--(int);      // Post-décrémentation
 };
 
 } // namespace carconfig

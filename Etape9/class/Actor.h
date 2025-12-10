@@ -13,9 +13,11 @@ class Actor : public Person
 protected:
     int id;  // Identifiant unique
     
-    static int currentNumber;  // Compteur pour générer des IDs uniques
     
 public:
+
+    static int currentNumber;  // Compteur pour générer des IDs uniques
+
     // Constructeurs
     Actor();
     Actor(const string& lastName, const string& firstName, int id);

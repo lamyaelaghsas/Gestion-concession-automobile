@@ -11,17 +11,11 @@ namespace carconfig {
 
 class Car
 {
-  friend ostream& operator<<(ostream& s, const Car& car);
-  friend Car operator+(const Option& option, const Car& car);
-  
 private:
     string name;           // Nom du projet
     Model model;           // Modèle de base
     Option* options[5];    // Tableau de 5 pointeurs vers des options
-    
-    // Méthode pour comparer les prix
-    int comparePrice(const Car& car) const;
-    
+
 public:
     // Constructeurs
     Car();
@@ -46,16 +40,6 @@ public:
     
     // Affichage
     void display() const;
-    
-    // OPÉRATEURS
-    Car& operator=(const Car& car);
-    int operator<(const Car& car) const;
-    int operator>(const Car& car) const;
-    int operator==(const Car& car) const;
-    Car operator+(const Option& option) const;
-    Car operator-(const Option& option) const;
-    Car operator-(const string& code) const;
-    Option* operator[](int i) const;
 };
 
 } // namespace carconfig
